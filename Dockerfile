@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install
+RUN npm i --lockfile-version 3 --package-lock-only
 
 # Copy source code
 COPY . .
