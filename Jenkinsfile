@@ -45,12 +45,11 @@ pipeline {
             }
         }
     }
-
+    }
     post {
         always {
             echo 'Cleaning up...'
             sh 'docker rmi ${DOCKER_IMAGE_TAG} || true'  // Clean up the Docker image from Jenkins agent
         }
     }
-}
 }
