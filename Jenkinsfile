@@ -49,20 +49,22 @@ pipeline {
     }
         stage('Deploy to EKS') {
             steps {
-                script {
-                    // Ensure kubectl is configured to access your EKS cluster
-                    sh '''
-                    aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
-                    # Update the Kubernetes deployment with the new Docker image
-                    kubectl set image deployment/${KUBERNETES_DEPLOYMENT_NAME} \
-                    ${KUBERNETES_DEPLOYMENT_NAME}=${DOCKER_IMAGE_TAG} \
-                    -n ${KUBERNETES_NAMESPACE} --record
-                    '''
+                withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'aws-credentials']]) {
+                    script {
+                        // Ensure kubectl is configured to access your EKS cluster
+                        sh '''
+                        aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
+                        # Update the Kubernetes deployment with the new Docker image
+                        kubectl set image deployment/${KUBERNETES_DEPLOYMENT_NAME} \
+                        ${KUBERNETES_DEPLOYMENT_NAME}=${DOCKER_IMAGE_TAG} \
+                        -n ${KUBERNETES_NAMESPACE} --record
+                        '''
                     
-                    // Verify deployment
-                    sh '''
-                    kubectl rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME} -n ${KUBERNETES_NAMESPACE}
-                    '''
+                        // Verify deployment
+                        sh '''
+                        kubectl rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME} -n ${KUBERNETES_NAMESPACE}
+                        '''
+                    }
                 }
             }
         }
