@@ -17,3 +17,18 @@ spec:
         - name: hello-world-container
           image: gauravsadhwani/gaurav_assessment:latest  # Replace with your Docker Hub image path
           imagePullPolicy: Always  # Ensures the latest image is pulled
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-service
+  namespace: default
+spec:
+  selector:
+    app: hello-world  # Same as the label in your Deployment
+  ports:
+    - protocol: TCP
+      port: 80  # Exposing service on port 80
+      targetPort: 3000  # Container is listening on port 3000
+  type: NodePort  # Exposing the service via NodePort for local setup
