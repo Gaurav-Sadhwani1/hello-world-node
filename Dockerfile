@@ -1,12 +1,12 @@
 # Base image
-FROM node:14
+FROM node:22
 
 # Set working directory
 WORKDIR /myapp
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install express --save --lockfile-version 3 --package-lock-only
+RUN npm install express --save
 
 # Copy source code
 COPY . .
