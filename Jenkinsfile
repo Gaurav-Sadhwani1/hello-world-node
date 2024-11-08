@@ -55,7 +55,7 @@ pipeline {
                         sh '''
                         aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
                         sed -i 's|your-dockerhub-username/your-dockerhub-repo:latest|${DOCKER_IMAGE_TAG}|g' ${K8S_DEPLOYMENT_YAML}
-                        kubectl apply -f ${K8S_DEPLOYMENT_YAML} -n ${KUBERNETES_NAMESPACE}
+                        kubectl apply -f ${K8S_DEPLOYMENT_YAML}
                         '''
                     
                         // Verify deployment
