@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     // Install dependencies (Node.js)
-                    sh 'npm install app/'
+                    sh 'npm install myapp/'
                 }
             }
         }
