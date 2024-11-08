@@ -2,17 +2,17 @@
 FROM node:22
 
 # Set working directory
-WORKDIR /myapp
+WORKDIR /app
 
 # Install dependencies
-COPY package*.json ./
+COPY myapp/package.json ./ 
 RUN npm install
 
 # Copy source code
-COPY . .
+COPY myapp/ ./ 
 
 # Expose port
 EXPOSE 3000
 
 # Start the application..
-CMD ["node", "myapp/app.js"]
+CMD ["node", "app.js"]
