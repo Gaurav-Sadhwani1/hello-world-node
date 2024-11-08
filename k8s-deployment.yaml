@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world  
+  namespace: hello-world  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world
+  template:
+    metadata:
+      labels:
+        app: hello-world
+    spec:
+      containers:
+        - name: hello-world-container
+          image: your-dockerhub-username/your-dockerhub-repo:latest  # Replace with your Docker Hub image path
+          imagePullPolicy: Always  # Ensures the latest image is pulled
