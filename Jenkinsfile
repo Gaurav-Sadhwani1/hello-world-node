@@ -5,6 +5,8 @@ pipeline {
         DOCKERHUB_USERNAME = 'gauravsadhwani'  // Replace with your Docker Hub username
         DOCKERHUB_REPO = 'gaurav_assessment'    // Replace with your Docker Hub repository name
         DOCKER_IMAGE_TAG = "${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:latest"
+        KUBERNETES_DEPLOYMENT_NAME = 'Hello-world' // Replace with your Kubernetes deployment name
+        KUBERNETES_NAMESPACE = 'default'     
     }
 
     stages {
@@ -45,6 +47,25 @@ pipeline {
             }
         }
     }
+        stage('Deploy to EKS') {
+            steps {
+                script {
+                    // Ensure kubectl is configured to access your EKS cluster
+                    sh '''
+                    aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
+                    # Update the Kubernetes deployment with the new Docker image
+                    kubectl set image deployment/${KUBERNETES_DEPLOYMENT_NAME} \
+                    ${KUBERNETES_DEPLOYMENT_NAME}=${DOCKER_IMAGE_TAG} \
+                    -n ${KUBERNETES_NAMESPACE} --record
+                    '''
+                    
+                    // Verify deployment
+                    sh '''
+                    kubectl rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME} -n ${KUBERNETES_NAMESPACE}
+                    '''
+                }
+            }
+        }
     }
     post {
         always {
