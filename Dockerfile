@@ -6,7 +6,7 @@ WORKDIR /myapp
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install express --save
+RUN npm install
 
 # Copy source code
 COPY . .
