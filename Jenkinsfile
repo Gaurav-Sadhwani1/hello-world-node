@@ -54,13 +54,12 @@ pipeline {
                         // Ensure kubectl is configured to access your EKS cluster
                         sh '''
                         aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
-                        sed -i 's|your-dockerhub-username/your-dockerhub-repo:latest|${DOCKER_IMAGE_TAG}|g' ${K8S_DEPLOYMENT_YAML}
                         kubectl apply -f ${K8S_DEPLOYMENT_YAML} -n ${KUBERNETES_NAMESPACE}
                         '''
                     
                         // Verify deployment
                         sh '''
-                        kubectl rollout status deployment/${KUBERNETES_DEPLOYMENT_NAME} -n ${KUBERNETES_NAMESPACE}
+                        kubectl rollout status deployment/hello-world -n ${KUBERNETES_NAMESPACE}
                         '''
                     }
                 }
