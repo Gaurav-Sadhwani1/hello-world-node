@@ -16,15 +16,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                script {
-                    // Install dependencies (Node.js)
-                    sh 'npm install myapp/'
-                }
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
