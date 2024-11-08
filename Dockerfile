@@ -6,7 +6,7 @@ WORKDIR /myapp
 
 # Install dependencies
 COPY package*.json ./
-RUN npm install express --save
+RUN npm install express --save --lockfile-version 3 --package-lock-only
 
 # Copy source code
 COPY . .
