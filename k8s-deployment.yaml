@@ -31,4 +31,4 @@ spec:
     - protocol: TCP
       port: 80  # Exposing service on port 80
       targetPort: 3000  # Container is listening on port 3000
-  type: NodePort  # Exposing the service via NodePort for local setup
+  type: LoadBalancer    # Exposing the service via NodePort for local setup
