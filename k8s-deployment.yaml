@@ -15,5 +15,5 @@ spec:
     spec:
       containers:
         - name: hello-world-container
-          image: your-dockerhub-username/your-dockerhub-repo:latest  # Replace with your Docker Hub image path
+          image: gauravsadhwani/gaurav_assessment:latest  # Replace with your Docker Hub image path
           imagePullPolicy: Always  # Ensures the latest image is pulled
