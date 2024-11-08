@@ -6,7 +6,7 @@ pipeline {
         DOCKERHUB_REPO = 'gaurav_assessment'    // Replace with your Docker Hub repository name
         DOCKER_IMAGE_TAG = "${DOCKERHUB_USERNAME}/${DOCKERHUB_REPO}:latest"
         K8S_DEPLOYMENT_YAML = 'k8s-deployment.yaml' // Replace with your Kubernetes deployment name
-        KUBERNETES_NAMESPACE = 'hello-world'     
+        KUBERNETES_NAMESPACE = 'default'     
     }
 
     stages {
@@ -55,7 +55,7 @@ pipeline {
                         sh '''
                         aws eks update-kubeconfig --name "gaurav-assessment-eks" --region "eu-central-1"
                         sed -i 's|your-dockerhub-username/your-dockerhub-repo:latest|${DOCKER_IMAGE_TAG}|g' ${K8S_DEPLOYMENT_YAML}
-                        kubectl apply -f ${K8S_DEPLOYMENT_YAML}
+                        kubectl apply -f ${K8S_DEPLOYMENT_YAML} -n ${KUBERNETES_NAMESPACE}
                         '''
                     
                         // Verify deployment
